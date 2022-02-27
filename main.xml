@@ -1,0 +1,241 @@
+<Sysmon schemaversion="4.81">
+  <EventFiltering>
+    <!-- Event ID 1 == ProcessCreate -->
+    <RuleGroup name="" groupRelation="or">
+      <ProcessCreate onmatch="include">
+        <Rule name="TechniqueID=T1027,TechniqueName=Obfuscated Files or Information" groupRelation="and">
+          <Image condition="end with">/base64</Image>
+          <CommandLine condition="contains">-d</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1036,TechniqueName=Masquerading" groupRelation="or">
+          <CommandLine condition="contains"> --cpu-priority=</CommandLine>
+          <CommandLine condition="contains">--donate-level=0</CommandLine>
+          <CommandLine condition="contains"> -o pool.</CommandLine>
+          <CommandLine condition="contains"> --nicehash</CommandLine>
+          <CommandLine condition="contains"> --algo=rx/0 </CommandLine>
+          <CommandLine condition="contains">stratum+tcp://</CommandLine>
+          <CommandLine condition="contains">stratum+udp://</CommandLine>
+          <CommandLine condition="contains">sh -c /sbin/modprobe msr allow_writes=on</CommandLine>
+          <CommandLine condition="contains">LS1kb25hdGUtbGV2ZWw9</CommandLine>
+          <CommandLine condition="contains">0tZG9uYXRlLWxldmVsP</CommandLine>
+          <CommandLine condition="contains">tLWRvbmF0ZS1sZXZlbD</CommandLine>
+          <CommandLine condition="contains">c3RyYXR1bSt0Y3A6Ly</CommandLine>
+          <CommandLine condition="contains">N0cmF0dW0rdGNwOi8v</CommandLine>
+          <CommandLine condition="contains">zdHJhdHVtK3RjcDovL</CommandLine>
+          <CommandLine condition="contains">c3RyYXR1bSt1ZHA6Ly</CommandLine>
+          <CommandLine condition="contains">N0cmF0dW0rdWRwOi8v</CommandLine>
+          <CommandLine condition="contains">zdHJhdHVtK3VkcDovL</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1070.002,TechniqueName=Indicator Removal on Host : Clear Linux or Mac System Logs" groupRelation="and">
+          <Image condition="end with">/rm</Image>
+          <CommandLine condition="contains any">/var/log;/var/spool/mail</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1070.002,TechniqueName=Indicator Removal on Host : Clear Linux or Mac System Logs" groupRelation="and">
+          <Image condition="end with">/shred</Image>
+          <CommandLine condition="contains any">/var/log;/var/spool/mail</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1070.004,TechniqueName=Indicator Removal on Host : File Deletion" groupRelation="or">
+          <Image condition="end with">/rm</Image>
+          <Image condition="end with">/shred</Image>
+        </Rule>
+        <Rule name="TechniqueID=T1553.004,TechniqueName=Subvert Trust Controls : Install Root Certificate" groupRelation="or">
+          <Image condition="end with">/update-ca-certificates</Image>
+          <Image condition="end with">/update-ca-trust</Image>
+        </Rule>
+        <Rule name="TechniqueID=T1562.004,TechniqueName=Impair Defenses : Disable or Modify System Firewall" groupRelation="and">
+          <Image condition="end with">/service</Image>
+          <CommandLine condition="contains all">iptables;stop</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1562.004,TechniqueName=Impair Defenses : Disable or Modify System Firewall" groupRelation="and">
+          <Image condition="end with">/service</Image>
+          <CommandLine condition="contains all">ip6tables;stop</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1562.004,TechniqueName=Impair Defenses : Disable or Modify System Firewall" groupRelation="and">
+          <Image condition="end with">/chkconfig</Image>
+          <CommandLine condition="contains all">iptables;stop</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1562.004,TechniqueName=Impair Defenses : Disable or Modify System Firewall" groupRelation="and">
+          <Image condition="end with">/chkconfig</Image>
+          <CommandLine condition="contains all">ip6tables;stop</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1562.004,TechniqueName=Impair Defenses : Disable or Modify System Firewall" groupRelation="and">
+          <Image condition="end with">/systemctl</Image>
+          <CommandLine condition="contains all">firewalld;stop</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1562.004,TechniqueName=Impair Defenses : Disable or Modify System Firewall" groupRelation="and">
+          <Image condition="end with">/systemctl</Image>
+          <CommandLine condition="contains all">firewalld;disable</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1562.004,TechniqueName=Impair Defenses : Disable or Modify System Firewall" groupRelation="and">
+          <Image condition="end with">/service</Image>
+          <CommandLine condition="contains all">cbdaemon;stop</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1562.004,TechniqueName=Impair Defenses : Disable or Modify System Firewall" groupRelation="and">
+          <Image condition="end with">/chkconfig</Image>
+          <CommandLine condition="contains all">cbdaemon;off</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1562.004,TechniqueName=Impair Defenses : Disable or Modify System Firewall" groupRelation="and">
+          <Image condition="end with">/systemctl</Image>
+          <CommandLine condition="contains all">cbdaemon;stop</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1562.004,TechniqueName=Impair Defenses : Disable or Modify System Firewall" groupRelation="and">
+          <Image condition="end with">/systemctl</Image>
+          <CommandLine condition="contains all">cbdaemon;disable</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1562.004,TechniqueName=Impair Defenses : Disable or Modify System Firewall" groupRelation="and">
+          <Image condition="end with">/setenforce</Image>
+          <CommandLine condition="contains">0</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1562.004,TechniqueName=Impair Defenses : Disable or Modify System Firewall" groupRelation="and">
+          <Image condition="end with">/systemctl</Image>
+          <CommandLine condition="contains all">stop;falcon-sensor</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1562.004,TechniqueName=Impair Defenses : Disable or Modify System Firewall" groupRelation="and">
+          <Image condition="end with">/systemctl</Image>
+          <CommandLine condition="contains all">disable;falcon-sensor</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1016,TechniqueName=System Network Configuration Discovery" groupRelation="or">
+          <Image condition="end with">/firewall-cmd</Image>
+          <Image condition="end with">/ufw</Image>
+          <Image condition="end with">/iptables</Image>
+          <Image condition="end with">/netstat</Image>
+          <Image condition="end with">/ss</Image>
+          <Image condition="end with">/ip</Image>
+          <Image condition="end with">/ifconfig</Image>
+          <Image condition="end with">/systemd-resolve</Image>
+          <Image condition="end with">/route</Image>
+          <CommandLine condition="contains">/etc/resolv.conf</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1018,TechniqueName=Remote System Discovery" groupRelation="and">
+          <Image condition="end with">/arp</Image>
+          <CommandLine condition="contains">-a</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1018,TechniqueName=Remote System Discovery" groupRelation="and">
+          <Image condition="end with">/ping</Image>
+          <CommandLine condition="contains any"> 10.; 192.168.; 172.16.; 172.17.; 172.18.; 172.19.; 172.20.; 172.21.; 172.22.; 172.23.; 172.24.; 172.25.; 172.26.; 172.27.; 172.28.; 172.29.; 172.30.; 172.31.; 127.; 169.254.</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1046,TechniqueName=Network Service Scanning" groupRelation="and">
+          <Image condition="end with">/nc</Image>
+          <CommandLine condition="excludes">l</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1046,TechniqueName=Network Service Scanning" groupRelation="and">
+          <Image condition="end with">/netcat</Image>
+          <CommandLine condition="excludes">l</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1046,TechniqueName=Network Service Scanning" groupRelation="or">
+          <Image condition="end with">/telnet</Image>
+          <Image condition="end with">/nmap</Image>
+        </Rule>
+        <Rule name="TechniqueID=T1049,TechniqueName=System Network Connections Discovery" groupRelation="or">
+          <Image condition="end with">/who</Image>
+          <Image condition="end with">/w</Image>
+          <Image condition="end with">/last</Image>
+          <Image condition="end with">/lsof</Image>
+          <Image condition="end with">/netstat</Image>
+        </Rule>
+        <Rule name="TechniqueID=T1057,TechniqueName=Process Discovery" groupRelation="or">
+          <Image condition="end with">/ps</Image>
+          <Image condition="end with">/top</Image>
+        </Rule>
+        <Rule name="TechniqueID=T1069.001,TechniqueName=Permission Groups Discovery : Local Groups" groupRelation="or">
+          <Image condition="end with">/groups</Image>
+        </Rule>
+        <Rule name="TechniqueID=T1069.001,TechniqueName=Permission Groups Discovery : Local Groups" groupRelation="and">
+          <Image condition="end with">/cat</Image>
+          <CommandLine condition="contains">/etc/group</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1082,TechniqueName=System Information Discovery" groupRelation="or">
+          <Image condition="end with">/uname</Image>
+          <Image condition="end with">/hostname</Image>
+          <Image condition="end with">/uptime</Image>
+          <Image condition="end with">/lspci</Image>
+          <Image condition="end with">/dmidecode</Image>
+          <Image condition="end with">/lscpu</Image>
+          <Image condition="end with">/lsmod</Image>
+        </Rule>
+        <Rule name="TechniqueID=T1083,TechniqueName=File and Directory Discovery" groupRelation="and">
+          <Image condition="end with">/ls</Image>
+          <CommandLine condition="contains">-R</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1083,TechniqueName=File and Directory Discovery" groupRelation="or">
+          <Image condition="end with">/find</Image>
+          <Image condition="end with">/tree</Image>
+        </Rule>
+        <Rule name="TechniqueID=T1087.001,TechniqueName=Account Discovery : Local Account" groupRelation="or">
+          <Image condition="end with">/lastlog</Image>
+          <CommandLine condition="contains">'x:0:'</CommandLine>
+          <Image condition="end with">/id</Image>
+        </Rule>
+        <Rule name="TechniqueID=T1087.001,TechniqueName=Account Discovery : Local Account" groupRelation="and">
+          <Image condition="end with">/cat</Image>
+          <CommandLine condition="contains any">/etc/passwd;/etc/sudoers</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1087.001,TechniqueName=Account Discovery : Local Account" groupRelation="and">
+          <Image condition="end with">/lsof</Image>
+          <CommandLine condition="contains">-u</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1518.001,TechniqueName=Software Discovery : Security Software Discovery" groupRelation="and">
+          <Image condition="end with">/grep</Image>
+          <CommandLine condition="contains">nessusd;td-agent;packetbeat;filebeat;auditbeat;osqueryd;cbagentd;falcond</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1053.003,TechniqueName=Scheduled Task/Job : Cron" groupRelation="and">
+          <Image condition="end with">crontab</Image>
+          <CommandLine condition="contains">/tmp/</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1485,TechniqueName=Data Destruction" groupRelation="and">
+          <CommandLine condition="contains">xclip</CommandLine>
+          <CommandLine condition="contains any">-selection;-sel</CommandLine>
+          <CommandLine condition="contains any">clipboard;clip</CommandLine>
+          <CommandLine condition="contains">-o</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1485,TechniqueName=Data Destruction" groupRelation="and">
+          <Image condition="is">/bin/dd</Image>
+          <CommandLine condition="contains">of=</CommandLine>
+          <CommandLine condition="contains any">if=/dev/zero;if=/dev/null</CommandLine>
+        </Rule>
+        <Rule name="TechniqueID=T1565.001,TechniqueName=Data Manipulation: Stored Data Manipulation" groupRelation="or">
+          <CommandLine condition="contains">rm /var/log/syslog</CommandLine>
+          <CommandLine condition="contains">rm -r /var/log/syslog</CommandLine>
+          <CommandLine condition="contains">rm -f /var/log/syslog</CommandLine>
+          <CommandLine condition="contains">rm -rf /var/log/syslog</CommandLine>
+          <CommandLine condition="contains">mv /var/log/syslog</CommandLine>
+          <CommandLine condition="contains"> >/var/log/syslog</CommandLine>
+          <CommandLine condition="contains"> > /var/log/syslog</CommandLine>
+        </Rule>
+      </ProcessCreate>
+    </RuleGroup>
+    <!-- Event ID 3 == NetworkConnect Detected -->
+    <RuleGroup name="" groupRelation="or">
+      <NetworkConnect onmatch="include">
+        <Rule name="TechniqueID=T1221,TechniqueName=Template Injection" groupRelation="and">
+          <Image condition="end with">/bin/bash</Image>
+          <DestinationIp condition="excludes any">127.0.0.1;0.0.0.0</DestinationIp>
+        </Rule>
+        <Rule name="TechniqueID=T1049,TechniqueName=System Network Connections Discovery" groupRelation="or">
+          <DestinationHostname condition="contains">pool.minexmr.com</DestinationHostname>
+          <DestinationHostname condition="contains">fr.minexmr.com</DestinationHostname>
+          <DestinationHostname condition="contains">de.minexmr.com</DestinationHostname>
+          <DestinationHostname condition="contains">sg.minexmr.com</DestinationHostname>
+          <DestinationHostname condition="contains">ca.minexmr.com</DestinationHostname>
+          <DestinationHostname condition="contains">us-west.minexmr.com</DestinationHostname>
+          <DestinationHostname condition="contains">pool.supportxmr.com</DestinationHostname>
+          <DestinationHostname condition="contains">mine.c3pool.com</DestinationHostname>
+          <DestinationHostname condition="contains">xmr-eu1.nanopool.org</DestinationHostname>
+          <DestinationHostname condition="contains">xmr-eu2.nanopool.org</DestinationHostname>
+          <DestinationHostname condition="contains">xmr-us-east1.nanopool.org</DestinationHostname>
+          <DestinationHostname condition="contains">xmr-us-west1.nanopool.org</DestinationHostname>
+          <DestinationHostname condition="contains">xmr-asia1.nanopool.org</DestinationHostname>
+          <DestinationHostname condition="contains">xmr-jp1.nanopool.org</DestinationHostname>
+          <DestinationHostname condition="contains">xmr-au1.nanopool.org</DestinationHostname>
+          <DestinationHostname condition="contains">xmr.2miners.com</DestinationHostname>
+          <DestinationHostname condition="contains">xmr.hashcity.org</DestinationHostname>
+          <DestinationHostname condition="contains">xmr.f2pool.com</DestinationHostname>
+          <DestinationHostname condition="contains">xmrpool.eu</DestinationHostname>
+          <DestinationHostname condition="contains">pool.hashvault.pro</DestinationHostname>
+          <DestinationHostname condition="contains">moneroocean.stream</DestinationHostname>
+          <DestinationHostname condition="contains">monerocean.stream</DestinationHostname>
+        </Rule>
+      </NetworkConnect>
+    </RuleGroup>
+  </EventFiltering>
+</Sysmon>
